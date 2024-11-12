@@ -13,14 +13,13 @@ client = MongoClient(MONGO_URI)
 db = client.facebookdb
 collection = db.posts
 
-# Simulated function to fetch Facebook posts by topic
+
 def fetch_facebook_posts(topic):
     search_url = f"https://www.facebook.com/search/posts/?q={topic}"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     }
     
-    # Requesting the search page
     response = requests.get(search_url, headers=headers)
     if response.status_code != 200:
         return []
@@ -28,15 +27,13 @@ def fetch_facebook_posts(topic):
     # Parse the page content with BeautifulSoup
     soup = BeautifulSoup(response.text, 'html.parser')
     
-    # Simulated: Find a hypothetical div or post structure (Facebook’s real structure is complex and varies)
     posts_data = []
-    posts = soup.find_all('div', class_='post_class')  # Replace 'post_class' with the correct class
+    posts = soup.find_all('div', class_='post_class')  # Adjust this based on actual class used on Facebook
     
     for post in posts[:5]:  # Limit to the first 5 posts
         post_text = post.get_text(strip=True)
         post_url = "https://www.facebook.com" + post.find('a')['href']
         
-        # Simulated post and comments (Facebook doesn’t provide comments on search pages)
         post_data = {
             "topic": topic,
             "content": post_text,
@@ -62,10 +59,14 @@ def search_posts():
         topic = data.get("topic", "")
         if not topic:
             return jsonify({"status": "error", "message": "Topic is required"}), 400
-
-        # Add your logic to fetch posts based on the topic here
-        # Return a success response with fetched data
-        return jsonify({"status": "success", "data": "fetched data based on topic: " + topic})
+        
+        # Fetch posts based on the topic
+        posts = fetch_facebook_posts(topic)
+        
+        if not posts:
+            return jsonify({"status": "error", "message": "No posts found for the given topic"}), 404
+        
+        return jsonify({"status": "success", "data": posts})
     
     except Exception as e:
         print(f"Error: {e}")
