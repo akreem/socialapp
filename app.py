@@ -49,7 +49,7 @@ def fetch_facebook_posts(topic):
 
 # Endpoint to search posts by topic and save to MongoDB
 @app.route('/sample', methods=['POST'])
-def Sample():
+def sample():
     # Sample data to be uploaded with the topic "Tunisia"
     sample_data = [
         {
@@ -91,7 +91,7 @@ def Sample():
     # Insert sample data into the MongoDB collection
     collection.insert_many(sample_data)
 
-    print("Sample data uploaded successfully to MongoDB.")
+    return "Sample data uploaded successfully to MongoDB."
 
 
 # Endpoint to search posts by topic and save to MongoDB
