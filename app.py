@@ -28,9 +28,9 @@ def fetch_facebook_posts(topic):
     soup = BeautifulSoup(response.text, 'html.parser')
     
     posts_data = []
-    posts = soup.find_all('div', class_='post_class')  # Adjust this based on actual class used on Facebook
+    posts = soup.find_all('div', class_='post_class')  
     
-    for post in posts[:5]:  # Limit to the first 5 posts
+    for post in posts[:5]:  
         post_text = post.get_text(strip=True)
         post_url = "https://www.facebook.com" + post.find('a')['href']
         
@@ -47,33 +47,14 @@ def fetch_facebook_posts(topic):
     
     return posts_data
 
-# Endpoint to search posts by topic and save to MongoDB
-@app.route('/sample', methods=['POST'])
-def sample():
-    try:
-        # Get the JSON data from the request body
-        data = request.get_json()
-
-        if not data:
-            return jsonify({"status": "error", "message": "No data provided"}), 400
-
-        # Insert the data into MongoDB
-        collection.insert_many(data)
-
-        return jsonify({"status": "success", "message": "Sample posts inserted successfully"}), 200
-
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
-
-
 
 # Endpoint to search posts by topic and save to MongoDB
 @app.route('/search_posts', methods=['POST'])
 def search_posts():
     try:
-        # Try to get JSON data first
+
         data = request.get_json()
-        if data is None:  # If JSON data isn't present, check form data
+        if data is None: 
             data = request.form
 
         topic = data.get("topic", "")
@@ -82,9 +63,6 @@ def search_posts():
         
         # Fetch posts based on the topic
         posts = fetch_facebook_posts(topic)
-        
-        if not posts:
-            return jsonify({"status": "error", "message": "No posts found for the given topic"}), 404
         
         return jsonify({"status": "success", "data": posts})
     
