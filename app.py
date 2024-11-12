@@ -57,8 +57,8 @@ def sample():
             "content": "This is a post about Tunisia",
             "url": "https://www.facebook.com/post/1",
             "comments": [
-                {"user": "User1", "comment": "Interesting point", "timestamp": "Mon Nov 12 15:32:10 2024"},
-                {"user": "User2", "comment": "Needs more context", "timestamp": "Mon Nov 12 15:32:12 2024"}
+                {"user": "Linda Ali", "comment": "Interesting point", "timestamp": "Mon Nov 12 15:32:10 2024"},
+                {"user": "Ahmed nouri", "comment": "Needs more context", "timestamp": "Mon Nov 12 15:32:12 2024"}
             ],
             "reactions": {
                 "like": 120,
@@ -74,8 +74,8 @@ def sample():
             "content": "Another post about Tunisia",
             "url": "https://www.facebook.com/post/2",
             "comments": [
-                {"user": "User3", "comment": "I agree with this", "timestamp": "Mon Nov 12 15:32:20 2024"},
-                {"user": "User4", "comment": "Could be explained better", "timestamp": "Mon Nov 12 15:32:22 2024"}
+                {"user": "Sana chebbi", "comment": "I agree with this", "timestamp": "Mon Nov 12 15:32:20 2024"},
+                {"user": "Olfa rachidi", "comment": "Could be explained better", "timestamp": "Mon Nov 12 15:32:22 2024"}
             ],
             "reactions": {
                 "like": 50,
