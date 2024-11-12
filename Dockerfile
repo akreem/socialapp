@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the app code and install dependencies
 COPY . /app
-RUN pip install Flask pymongo
+RUN pip install -r requirements.txt
 
 # Run the Flask app
 CMD ["python", "app.py"]
