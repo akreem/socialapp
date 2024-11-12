@@ -50,48 +50,21 @@ def fetch_facebook_posts(topic):
 # Endpoint to search posts by topic and save to MongoDB
 @app.route('/sample', methods=['POST'])
 def sample():
-    # Sample data to be uploaded with the topic "Tunisia"
-    sample_data = [
-        {
-            "topic": "Tunisia",
-            "content": "This is a post about Tunisia",
-            "url": "https://www.facebook.com/post/1",
-            "comments": [
-                {"user": "Linda Ali", "comment": "Interesting point", "timestamp": "Mon Nov 12 15:32:10 2024"},
-                {"user": "Ahmed nouri", "comment": "Needs more context", "timestamp": "Mon Nov 12 15:32:12 2024"}
-            ],
-            "reactions": {
-                "like": 120,
-                "love": 45,
-                "wow": 10,
-                "haha": 5,
-                "sad": 3,
-                "angry": 2
-            }
-        },
-        {
-            "topic": "Tunisia",
-            "content": "Another post about Tunisia",
-            "url": "https://www.facebook.com/post/2",
-            "comments": [
-                {"user": "Sana chebbi", "comment": "I agree with this", "timestamp": "Mon Nov 12 15:32:20 2024"},
-                {"user": "Olfa rachidi", "comment": "Could be explained better", "timestamp": "Mon Nov 12 15:32:22 2024"}
-            ],
-            "reactions": {
-                "like": 50,
-                "love": 20,
-                "wow": 8,
-                "haha": 3,
-                "sad": 1,
-                "angry": 0
-            }
-        }
-    ]
+    try:
+        # Get the JSON data from the request body
+        data = request.get_json()
 
-    # Insert sample data into the MongoDB collection
-    collection.insert_many(sample_data)
+        if not data:
+            return jsonify({"status": "error", "message": "No data provided"}), 400
 
-    return "Sample data uploaded successfully to MongoDB."
+        # Insert the data into MongoDB
+        collection.insert_many(data)
+
+        return jsonify({"status": "success", "message": "Sample posts inserted successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
 
 
 # Endpoint to search posts by topic and save to MongoDB
