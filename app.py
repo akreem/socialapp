@@ -48,6 +48,53 @@ def fetch_facebook_posts(topic):
     return posts_data
 
 # Endpoint to search posts by topic and save to MongoDB
+@app.route('/sample', methods=['POST'])
+def Sample():
+    # Sample data to be uploaded with the topic "Tunisia"
+    sample_data = [
+        {
+            "topic": "Tunisia",
+            "content": "This is a post about Tunisia",
+            "url": "https://www.facebook.com/post/1",
+            "comments": [
+                {"user": "User1", "comment": "Interesting point", "timestamp": "Mon Nov 12 15:32:10 2024"},
+                {"user": "User2", "comment": "Needs more context", "timestamp": "Mon Nov 12 15:32:12 2024"}
+            ],
+            "reactions": {
+                "like": 120,
+                "love": 45,
+                "wow": 10,
+                "haha": 5,
+                "sad": 3,
+                "angry": 2
+            }
+        },
+        {
+            "topic": "Tunisia",
+            "content": "Another post about Tunisia",
+            "url": "https://www.facebook.com/post/2",
+            "comments": [
+                {"user": "User3", "comment": "I agree with this", "timestamp": "Mon Nov 12 15:32:20 2024"},
+                {"user": "User4", "comment": "Could be explained better", "timestamp": "Mon Nov 12 15:32:22 2024"}
+            ],
+            "reactions": {
+                "like": 50,
+                "love": 20,
+                "wow": 8,
+                "haha": 3,
+                "sad": 1,
+                "angry": 0
+            }
+        }
+    ]
+
+    # Insert sample data into the MongoDB collection
+    collection.insert_many(sample_data)
+
+    print("Sample data uploaded successfully to MongoDB.")
+
+
+# Endpoint to search posts by topic and save to MongoDB
 @app.route('/search_posts', methods=['POST'])
 def search_posts():
     try:
