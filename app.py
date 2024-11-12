@@ -132,15 +132,16 @@ def get_topic_posts():
 
     # If no posts are found for the topic
     if not posts:
-        return jsonify({"message": "No posts found for this topic"}), 404
+        return jsonify({"message": f"No posts found for topic '{topic}'"}), 404
 
     # Return posts in a readable format (excluding MongoDB-specific fields)
     posts_data = []
     for post in posts:
         post_data = {
-            "content": post["content"],
-            "url": post["url"],
-            "comments": post["comments"]
+            "content": post.get("content"),
+            "url": post.get("url"),
+            "comments": post.get("comments"),
+            "reactions": post.get("reactions")
         }
         posts_data.append(post_data)
     
