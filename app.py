@@ -53,19 +53,23 @@ def fetch_facebook_posts(topic):
 # Endpoint to search posts by topic and save to MongoDB
 @app.route('/search_posts', methods=['POST'])
 def search_posts():
-    data = request.json
-    topic = data.get("topic", "")
+    try:
+        # Try to get JSON data first
+        data = request.get_json()
+        if data is None:  # If JSON data isn't present, check form data
+            data = request.form
+
+        topic = data.get("topic", "")
+        if not topic:
+            return jsonify({"status": "error", "message": "Topic is required"}), 400
+
+        # Add your logic to fetch posts based on the topic here
+        # Return a success response with fetched data
+        return jsonify({"status": "success", "data": "fetched data based on topic: " + topic})
     
-    if not topic:
-        return jsonify({"error": "Topic is required"}), 400
-    
-    posts = fetch_facebook_posts(topic)
-    
-    # Save posts to MongoDB if found
-    if posts:
-        collection.insert_many(posts)
-    
-    return jsonify({"message": "Posts collected and saved", "posts_count": len(posts)})
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 # Endpoint to get posts of a specific topic from MongoDB
 @app.route('/get_topic_posts', methods=['GET'])

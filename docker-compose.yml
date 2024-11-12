@@ -18,6 +18,8 @@ services:
       - mongodb
     environment:
       - MONGO_URI=mongodb://mongodb:27017
+    volumes:
+      - .:/app
 
 volumes:
   mongo_data:
